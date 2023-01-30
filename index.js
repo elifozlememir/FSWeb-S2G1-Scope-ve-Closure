@@ -65,7 +65,7 @@ Not: Bu fonskiyon, aşağıdaki diğer görevler için de bir callback fonksiyon
 */
 
 function takimSkoru(/*Kodunuzu buraya yazınız*/){
-    /*Kodunuzu buraya yazınız*/
+    return Math.floor(Math.random() * 16)+10;
 }
 
 
@@ -86,11 +86,23 @@ Aşağıdaki macSonucu() fonksiyonununda aşağıdakileri yapınız:
 }
 */ 
 
-function macSonucu(/*Kodunuzu buraya yazınız*/){
-  /*Kodunuzu buraya yazınız*/
+function macSonucu(fnc,ceyrek){
+  let evSahibiSkor=0;
+  let konukTakimSkor=0;
+
+  for(let i=1;i<=ceyrek;i++){
+
+    evSahibiSkor=evSahibiSkor + fnc();
+    konukTakimSkor=konukTakimSkor + fnc();
+
+  }
+  let obj={ EvSahibi:evSahibiSkor,
+            KonukTakim:konukTakimSkor};
+   
+return obj;
 }
 
-
+console.log(macSonucu(takimSkoru, 4))
 
 
 
@@ -109,9 +121,12 @@ Aşağıdaki periyotSkoru() fonksiyonununda aşağıdakileri yapınız:
   */
 
 
-function periyotSkoru(/*Kodunuzu buraya yazınız*/) {
-  /*Kodunuzu buraya yazınız*/
-
+function periyotSkoru(fnc) {
+  
+  let obj={ EvSahibi:fnc(),
+            KonukTakim:fnc()};
+   
+return obj;
 }
 
 
@@ -146,10 +161,35 @@ MAÇ UZAR ise skorTabelasi(periyotSkoru,takimSkoru,4)
 ] */
 // NOTE: Bununla ilgili bir test yoktur. Eğer logladığınız sonuçlar yukarıdakine benziyor ise tmamlandı sayabilirsiniz.
 
-function skorTabelasi(/*Kodunuzu buraya yazınız*/) {
-  /*Kodunuzu buraya yazınız*/
-}
+function skorTabelasi(fnc1,fnc2,ceyrek) {
+let arr=[];
+let evSahibiSkor=0;
+let konukTakimSkor=0;
+  
+  for (let i=1;i<=ceyrek;i++){
+      let periyotSkoru=fnc1(fnc2);
+      arr.push(i+". Periyot: Ev Sahibi "+periyotSkoru.EvSahibi+" - Konuk Takım "+periyotSkoru.KonukTakim);
+      evSahibiSkor=evSahibiSkor+periyotSkoru.EvSahibi;
+      konukTakimSkor=konukTakimSkor+periyotSkoru.KonukTakim;
 
+      }
+      
+  let j=1;
+  while(evSahibiSkor==konukTakimSkor){
+    let uzatmaev=fnc2();
+    let uzatmakonuk=fnc2();
+    arr.push(j+". Uzatma: Ev Sahibi "+uzatmaev +"- Konuk Takım "+ uzatmakonuk);
+    evSahibiSkor=evSahibiSkor+ uzatmaev;
+    konukTakimSkor=konukTakimSkor+ uzatmakonuk;
+    j=j+1;
+  }
+      
+ arr.push("Maç Sonucu: Ev Sahibi "+evSahibiSkor +"- Konuk Takım "+konukTakimSkor );
+
+return arr;
+  }
+
+console.log(skorTabelasi(periyotSkoru,takimSkoru,4))
 
 
 
